@@ -1,5 +1,4 @@
-
-const url = "http://localhost:5255/balance";
+const url = "http://localhost:5255/api/CheckBalance";
 const formElement = document.querySelector("form");
 
 async function getData(data) {
@@ -24,6 +23,23 @@ async function getData(data) {
     return response.json();
 }
 
+function validateForm(data) {
+    const cardNumberRegex = /^\d{12}$/;
+    const pinRegex = /^\d{4}$/;
+
+    if (!cardNumberRegex.test(data.cardNumber)) {
+        alert("Card number must be 16 digits long.");
+        return false;
+    }
+
+    if (!pinRegex.test(data.pin)) {
+        alert("PIN must be 4 digits long.");
+        return false;
+    }
+
+    return true;
+}
+
 function handleFormSubmission(event) {
     event.preventDefault();
 
@@ -33,14 +49,16 @@ function handleFormSubmission(event) {
         pin: formData.get("pin")
     };
 
-    getData(data)
-    .then(result => {
-        alert("Your current balance is: $" + result.balance);
-        window.location.href = "/index.html";
-    })
-    .catch(error => {
-        alert("Error: " + error.message);
-    });
+    if (validateForm(data)) {
+        getData(data)
+        .then(result => {
+            alert("Your current balance is: $" + result.balance);
+            window.location.href = "/index.html";
+        })
+        .catch(error => {
+            alert("Error: " + error.message);
+        });
+    }
 }
 
 formElement.addEventListener("submit", handleFormSubmission);

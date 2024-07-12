@@ -23,6 +23,29 @@ async function getData(data) {
     return response.json();
 }
 
+function validateForm(data) {
+    const cardNumberRegex = /^\d{12}$/;
+    const pinRegex = /^\d{4}$/;
+    const amount = parseFloat(data.amount);
+
+    if (!cardNumberRegex.test(data.cardNumber)) {
+        alert("Card number must be 16 digits long.");
+        return false;
+    }
+
+    if (!pinRegex.test(data.pin)) {
+        alert("PIN must be 4 digits long.");
+        return false;
+    }
+
+    if (isNaN(amount) || amount < 1 || amount > 100000) {
+        alert("Amount must be between 1 and 100000.");
+        return false;
+    }
+
+    return true;
+}
+
 function handleFormSubmission(event) {
     event.preventDefault();
 
@@ -33,14 +56,16 @@ function handleFormSubmission(event) {
         pin: formData.get("pin")
     };
 
-    getData(data)
-    .then(result => {
-        alert("Your money has been withdrawn successfully. Your new balance is: " + result.currentBalance);
-        window.location.href = "/index.html";
-    })
-    .catch(error => {
-        alert("Error: " + error.message);
-    });
+    if (validateForm(data)) {
+        getData(data)
+        .then(result => {
+            alert("Your money has been withdrawn successfully. Your new balance is: " + result.currentBalance);
+            // window.location.href = "/index.html";
+        })
+        .catch(error => {
+            alert("Error: " + error.message);
+        });
+    }
 }
 
 formElement.addEventListener("submit", handleFormSubmission);
