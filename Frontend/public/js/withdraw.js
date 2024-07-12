@@ -1,26 +1,26 @@
-/*
- * Author: Bank Bros
- * Created on: 11/07/2024
-*/
-const balanceUrl = "http://localhost:5255/balance"
-const url = "http://localhost:5255/api/WithDrawal"
+const url = "http://localhost:5255/api/WithDrawal";
 const formElement = document.querySelector("form");
 
 async function getData(data) {
-    const response = fetch(
-        url, {
-            method: "POST",
-            body: data
+    const response = await fetch(url, {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    });
+
+    if (!response.ok) { // Check if response status is not OK (i.e., >= 400)
+        const errorData = await response.json();
+        if (response.status >= 400 && response.status < 500) {
+            throw new Error(errorData.message || "Client-side error occurred.");
         }
-    );
+        if (response.status >= 500) {
+            throw new Error("The server cannot process the request right now.");
+        }
+    }
 
-    if (response.status == 401)
-        throw new Error("Invalid pin entered.");
-
-    if (response.staus >= 500)
-        throw new Error("The server cannot process the request right now.");
-
-    return (await response).json();
+    return response.json();
 }
 
 function handleFormSubmission(event) {
@@ -35,10 +35,11 @@ function handleFormSubmission(event) {
 
     getData(data)
     .then(result => {
-        alert("Your money has been credited successfully.");
+        alert("Your money has been withdrawn successfully. Your new balance is: " + result.currentBalance);
+        // window.location.href = "/index.html";
     })
     .catch(error => {
-        alert("Error: " + error);
+        alert("Error: " + error.message);
     });
 }
 
