@@ -1,9 +1,10 @@
-const url = "http://localhost:5255/api/WithDrawal";
+
+const url = "http://localhost:5255/balance";
 const formElement = document.querySelector("form");
 
 async function getData(data) {
     const response = await fetch(url, {
-        method: "PUT",
+        method: "POST",
         headers: {
             "Content-Type": "application/json"
         },
@@ -28,14 +29,13 @@ function handleFormSubmission(event) {
 
     const formData = new FormData(formElement);
     const data = {
-        amount: formData.get("amount"),
         cardNumber: formData.get("cardno"),
         pin: formData.get("pin")
     };
 
     getData(data)
     .then(result => {
-        alert("Your money has been withdrawn successfully. Your new balance is: " + result.currentBalance);
+        alert("Your current balance is: $" + result.balance);
         window.location.href = "/index.html";
     })
     .catch(error => {
