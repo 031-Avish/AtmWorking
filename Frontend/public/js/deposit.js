@@ -38,10 +38,10 @@ function handleFormSubmission(event) {
     .then(result => {
         // console.log(result);
         alert("Your money has been deposited successfully. Your new balance is: " + result.currentBalance);
-        // window.location.href = "/index.html";
+        window.location.href = "/index.html";
     })
     .catch(error => {
-        alert("Error: " + error.message);
+        alert("Error Qccured !!  " + error.message);
     });
 }
 
