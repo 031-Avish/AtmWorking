@@ -38,14 +38,14 @@ namespace ATMApp.Contexts
                                 {
                                     AccountId = 2,
                                     AccountNumber = "987654321",
-                                    AccountHolderName = "Jane Doe",
+                                    AccountHolderName = "Jane karan",
                                     Balance = 5000
                                 },
                                 new Account
                                 {
                                     AccountId = 3,
                                     AccountNumber = "123456789",
-                                    AccountHolderName = "John Doe",
+                                    AccountHolderName = "Ramu",
                                     Balance = 10000
                                 });
             #endregion

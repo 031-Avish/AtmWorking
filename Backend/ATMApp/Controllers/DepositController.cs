@@ -2,11 +2,14 @@
 using ATMApp.Interfaces;
 using ATMApp.Models;
 using ATMApp.Models.DTOs;
+using ATMApp.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATMApp.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowAllOrigins")]
     [ApiController]
     public class DepositController : ControllerBase
     {
@@ -40,7 +43,10 @@ namespace ATMApp.Controllers
             {
                 return BadRequest(new ErrorModel(e.Message, StatusCodes.Status400BadRequest));
             }
-
+            catch(NoCardFount e)
+            {
+                return NotFound(new ErrorModel(e.Message,StatusCodes.Status400BadRequest));
+            }
             catch (Exception)
             {
 

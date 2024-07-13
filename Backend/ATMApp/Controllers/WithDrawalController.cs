@@ -5,11 +5,14 @@ using ATMApp.Exceptions.Card;
 using ATMApp.Interfaces;
 using ATMApp.Models;
 using ATMApp.Models.DTOs;
+using ATMApp.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ATMApp.Controllers
 {
     [Route("api/[controller]")]
+    [EnableCors("AllowAllOrigins")]
     [ApiController]
     public class WithDrawalController : ControllerBase
     {
@@ -76,6 +79,10 @@ namespace ATMApp.Controllers
             catch (AccountNotFound e)
             {
                 return NotFound(new ErrorModel(e.Message, StatusCodes.Status404NotFound));
+            }
+            catch(NoCardFount e)
+            {
+                return NotFound(new ErrorModel(e.Message,StatusCodes.Status404NotFound));
             }
             catch (Exception)
             {

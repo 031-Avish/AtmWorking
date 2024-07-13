@@ -23,6 +23,7 @@ namespace ATMApp.Services
 
             var cards = await _cardRepository.Get();
             var card = cards.FirstOrDefault(c => c.CardNumber == depositDTO.CardNumber);
+            if (card == null) { throw new NoCardFount("card not found"); }
 
             HMACSHA512 hMACSHA = new HMACSHA512(card.PinHashKey);
 

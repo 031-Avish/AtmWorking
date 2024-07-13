@@ -3,10 +3,13 @@ using ATMApp.Models.DTOs;
 using ATMApp.Models;
 using ATMApp.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Cors;
 
 namespace ATMApp.Controllers
 {
+
     [Route("api/[controller]")]
+    [EnableCors("AllowAllOrigins")]
     [ApiController]
     public class CreateCardController : ControllerBase
     {

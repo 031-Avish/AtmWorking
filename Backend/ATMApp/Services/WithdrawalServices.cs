@@ -31,6 +31,10 @@ namespace ATMApp.Services
         {
             var allCards = await _cardRepository.Get();
             var card = allCards.FirstOrDefault(c => c.CardNumber == withdrawalDTO.CardNumber);
+            if(card == null)
+            {
+                throw new NoCardFount("No card found");
+            }
             var account = await _accountRepository.Get(card.AccountId);
 
 
