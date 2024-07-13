@@ -30,7 +30,7 @@ namespace ATMApp.Controllers
             try
             {
 
-                var result = new BalanceResponseDto() { Balance = await _services.CheckBalance(data) };
+                var result = new BalanceResponseDto() { Balance =    _services.CheckBalance(data) };
 
                 return Ok(result);
             }

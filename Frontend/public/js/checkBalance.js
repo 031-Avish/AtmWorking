@@ -1,4 +1,4 @@
-const url = "http://localhost:5255/api/CheckBalance";
+const url = "http://localhost:5255/balance";
 const formElement = document.querySelector("form");
 
 async function getData(data) {
